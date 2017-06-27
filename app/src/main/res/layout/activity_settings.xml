@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <include layout="@layout/include_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Device is currently auto registered!"
+            android:layout_marginBottom="16dp"
+            android:gravity="top"/>
+
+        <Button
+            android:id="@+id/btnForceAutoRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Force Auto Register"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:background="#996633"
+            android:layout_marginBottom="16dp"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/btnRevalidateAutoRegister"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Revalidate Auto Register"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:background="#996633"
+            android:layout_marginBottom="16dp"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/btnForceDataCollection"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Force Data Collection"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:background="#996633"
+            android:layout_marginBottom="16dp"
+            android:onClick="onClick"/>
+
+        <Button
+            android:id="@+id/startbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.09"
+            android:text="Start Capture" />
+
+        <Button
+            android:id="@+id/stopbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.08"
+            android:text="Stop Capture" />
+
+    </LinearLayout>
+
+</LinearLayout>
