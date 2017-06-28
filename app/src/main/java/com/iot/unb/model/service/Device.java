@@ -72,7 +72,8 @@ public class Device {
         return BatteryInfo.getBatteryState();
     }
 
-    public static int getBatteryPercentage(){
-        return  BatteryInfo.getBatteryPercentage();
-    }
+    public static int getBatteryPercentage(){ return  BatteryInfo.getBatteryPercentage(); }
+
+    //public static int getAllData(){ }
+
 }

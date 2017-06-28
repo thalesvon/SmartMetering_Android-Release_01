@@ -17,6 +17,7 @@ public class ServiceRegisterAux {
     public static final String SERVICE_NAME_FOR_MODEL              = "GetModel";
     public static final String SERVICE_NAME_FOR_BRANCH             = "GetBranch";
     public static final String SERVICE_NAME_FOR_OS                 = "GetOperationSystem";
+    public static final String SERVICE_NAME_FOR_COLLECT            = "GetAllData";
 
     public static ServiceRegister servicesWithRoot() {
         ServiceRegister serviceRegister = new ServiceRegister();
@@ -27,6 +28,7 @@ public class ServiceRegisterAux {
         serviceRegister.addService(serviceWithModel());
         serviceRegister.addService(serviceWithBranch());
         serviceRegister.addService(serviceWithOS());
+        serviceRegister.addService(serviceWithALLData());
 
         return serviceRegister;
     }
@@ -92,5 +94,24 @@ public class ServiceRegisterAux {
         service.addParameter("deviceId", "string");
 
         return service;
+    }
+
+    private  static Service serviceWithALLData() {
+        Service service = new Service();
+        service.setName(SERVICE_NAME_FOR_COLLECT);
+
+        service.addParameter("branch", "string");
+        service.addParameter("model", "string");
+        service.addParameter("os", "string");
+        service.addParameter("state", "string");
+        service.addParameter("percentage", "float");
+        service.addParameter("carrier", "string");
+        service.addParameter("signal", "float");
+        service.addParameter("latitude", "float");
+        service.addParameter("longitude", "float");
+        service.addParameter("deviceId", "string");
+
+        return service;
+
     }
 }

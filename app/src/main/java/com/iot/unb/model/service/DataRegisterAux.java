@@ -21,6 +21,7 @@ public class DataRegisterAux {
         dataRegister.addData(dataForModel());
         dataRegister.addData(dataForBranch());
         dataRegister.addData(dataForOS());
+        dataRegister.addData(allData());
 
         return dataRegister;
     }
@@ -107,6 +108,28 @@ public class DataRegisterAux {
         Data data = new Data();
         data.setServiceId(serviceId);
         data.addData("os", Device.getOperationSystem());
+        data.addData("deviceId", Device.getUniqueIdentifier());
+
+        return data;
+    }
+
+    private static Data allData() {
+        int serviceId = getServiceId(ServiceRegisterAux.SERVICE_NAME_FOR_COLLECT);
+        if (serviceId == 0) {
+            return null;
+        }
+
+        Data data = new Data();
+        data.setServiceId(serviceId);
+        data.addData("branch", Device.getBrand());
+        data.addData("model", Device.getModel());
+        data.addData("os", Device.getOperationSystem());
+        data.addData("state", Device.getBatteryState());
+        data.addData("percentage", Device.getBatteryPercentage());
+        data.addData("carrier", Device.getCarrierName());
+        data.addData("signal", Device.getSignalStrenght());
+        data.addData("latitude", Device.getLatitude());
+        data.addData("longitude", Device.getLongitude());
         data.addData("deviceId", Device.getUniqueIdentifier());
 
         return data;
