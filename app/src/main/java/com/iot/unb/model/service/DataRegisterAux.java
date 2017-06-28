@@ -15,12 +15,12 @@ public class DataRegisterAux {
 
         DataRegister dataRegister = new DataRegister();
 
-        dataRegister.addData(dataForLocation());
-        dataRegister.addData(dataForSignalLevel());
-        dataRegister.addData(dataForBatteryLevel());
-        dataRegister.addData(dataForModel());
-        dataRegister.addData(dataForBranch());
-        dataRegister.addData(dataForOS());
+        //dataRegister.addData(dataForLocation());
+        //dataRegister.addData(dataForSignalLevel());
+        //dataRegister.addData(dataForBatteryLevel());
+        //dataRegister.addData(dataForModel());
+        //dataRegister.addData(dataForBranch());
+        //dataRegister.addData(dataForOS());
         dataRegister.addData(allData());
 
         return dataRegister;

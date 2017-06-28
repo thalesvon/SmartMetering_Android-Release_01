@@ -22,12 +22,12 @@ public class ServiceRegisterAux {
     public static ServiceRegister servicesWithRoot() {
         ServiceRegister serviceRegister = new ServiceRegister();
 
-        serviceRegister.addService(serviceWithLocation());
-        serviceRegister.addService(serviceWithNetworkSignal());
-        serviceRegister.addService(serviceWithBatteryLevel());
-        serviceRegister.addService(serviceWithModel());
-        serviceRegister.addService(serviceWithBranch());
-        serviceRegister.addService(serviceWithOS());
+        //serviceRegister.addService(serviceWithLocation());
+        //serviceRegister.addService(serviceWithNetworkSignal());
+        //serviceRegister.addService(serviceWithBatteryLevel());
+        //serviceRegister.addService(serviceWithModel());
+        //serviceRegister.addService(serviceWithBranch());
+        //serviceRegister.addService(serviceWithOS());
         serviceRegister.addService(serviceWithALLData());
 
         return serviceRegister;
