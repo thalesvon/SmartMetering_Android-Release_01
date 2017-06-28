@@ -58,7 +58,7 @@ public class Register {
 
         List<String> tags = new ArrayList<String>();
         tags.add("Android");
-        tags.add("Smart Metering Homol");
+        tags.add("Smart Metering Homol 2");
         setTags(tags);
     }
 }
