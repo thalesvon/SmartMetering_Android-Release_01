@@ -21,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         data_list = new ArrayList<>();
         adapter = new SwipeListAdapter(this, data_list);
-
 
         listView.setAdapter(adapter);
 
@@ -105,25 +106,41 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefreshLayout.setRefreshing(true);
         String latitude;
         String longitude;
+        String state;
+        String percentage;
+        String carrier;
+        String signal;
+        String signaldbm;
+        String timestamp;
+
         try {
             JSONObject dataObj =  new JSONObject(last_json);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            timestamp = "Data collected on: " + sdf.format(Integer.valueOf(dataObj.getString("client_time"))*1000L);
             System.out.println(dataObj);
             JSONArray data = dataObj.getJSONArray("data");
             JSONObject data_values = data.getJSONObject(0);
             System.out.println(data_values);
             JSONObject value = data_values.getJSONObject("data_values");
             System.out.println(value);
-            latitude = value.getString("latitude");
-            longitude = value.getString("longitude");
-            System.out.println(latitude);
-            System.out.println(longitude);
+            latitude ="Latitude: " + value.getString("latitude");
+            longitude ="Longitude: " + value.getString("longitude");
+            state = "State: " + value.getString("state");
+            percentage ="Percentage: " + value.getString("percentage");
+            carrier = "Carrier: " + value.getString("carrier");
+            signal = "Signal: " + value.getString("signal");
+            signaldbm = "Signal(dBm): " + value.getString("signaldbm");
 
-            LastData ld = new LastData(latitude,longitude);
+            System.out.println(timestamp);
+            //System.out.println(longitude);
+
+            LastData ld = new LastData(timestamp);
             data_list.add(0,ld);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
 
     }

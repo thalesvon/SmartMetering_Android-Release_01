@@ -64,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 });
             }
         };
-        timer.schedule (hourlyTask, 0l, 1000*60*60);
+        timer.schedule (hourlyTask, 0l, 1000*60*10);
     }
 
     @Override
