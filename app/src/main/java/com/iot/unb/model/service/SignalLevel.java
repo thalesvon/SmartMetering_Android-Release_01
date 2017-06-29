@@ -16,13 +16,14 @@ import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
-
+import android.telephony.gsm.GsmCellLocation;
 
 
 //Atencao ao construtor da classe. Passar contexto da activity quando criar objeto
 public class SignalLevel extends Service {
     private final Context mContext;
     static int level;
+    static int currentStrength;
     static String carrierName;
     public SignalLevel(Context mContext){
         this.mContext = mContext;
@@ -37,27 +38,47 @@ public class SignalLevel extends Service {
                 super.onSignalStrengthsChanged(strength);
                 String[] parts = strength.toString().split(" ");
                 carrierName = telephonyManager.getNetworkOperatorName();
+                GsmCellLocation cellLocation =  (GsmCellLocation) telephonyManager.getCellLocation();
+                int cellid =  cellLocation.getCid();
+                int lac = cellLocation.getLac();
+                int mcc =0;
+                int mnc =0;
+                String networkOperator = telephonyManager.getNetworkOperator();
+                if(strength.isGsm()) {
+                    mcc = Integer.parseInt(networkOperator.substring(0, 3));
+                    mnc = Integer.parseInt(networkOperator.substring(3));
+                }
+                System.out.println("MCC: "+mcc);
+                System.out.println("MNC: "+mnc);
+                System.out.println("CID: "+cellid);
+                System.out.println("LAC: "+lac);
+
 
                 if (true) {
                     String signalStrength = "";
-                    int currentStrength = strength.getGsmSignalStrength();
+                    currentStrength = strength.getGsmSignalStrength();
                     level = strength.getLevel();
-                    /*if (currentStrength <= 0) {
+                    if (currentStrength <= 0) {
                         if (currentStrength == 0) {
-                            signalStrength = String.valueOf(Integer.parseInt(parts[3]));
+                            currentStrength= Integer.valueOf(Integer.parseInt(parts[3]));
                         } else {
-                            signalStrength = String.valueOf(Integer.parseInt(parts[1]));
+                            currentStrength = Integer.valueOf(Integer.parseInt(parts[1]));
                         }
                         signalStrength += " dBm";
-                    } else {
+                    }
+                    else if(currentStrength == 99){
+                        currentStrength = Integer.valueOf(Integer.parseInt(parts[8])-140);
+                    }
+                    else {
                         if (currentStrength != 99) {
                             signalStrength = String.valueOf(((2 * currentStrength) - 113));
                             signalStrength += " dBm";
+                            currentStrength = 2*currentStrength-113;
                         }
                     }
 
-                    System.out.println("LEVEL is: " + level+ " "+carrierName);
-                    System.out.println("Signal strength is : " + signalStrength);*/
+                    //System.out.println("LEVEL is: " + level+ " "+carrierName);
+                    //System.out.println("Signal strength is : " + signalStrength);
 
                 }
 
@@ -69,6 +90,7 @@ public class SignalLevel extends Service {
 
     public static int getSignalStrength(){return level;}
     public static String getCarrierName(){ return carrierName;}
+    public static int getSignaldBm(){return currentStrength;}
 
     @Nullable
     @Override

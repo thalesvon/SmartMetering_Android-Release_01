@@ -128,6 +128,7 @@ public class DataRegisterAux {
         data.addData("percentage", Device.getBatteryPercentage());
         data.addData("carrier", Device.getCarrierName());
         data.addData("signal", Device.getSignalStrenght());
+        data.addData("signaldbm", Device.getSignaldBm());
         data.addData("latitude", Device.getLatitude());
         data.addData("longitude", Device.getLongitude());
         data.addData("deviceId", Device.getUniqueIdentifier());

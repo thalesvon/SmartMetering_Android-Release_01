@@ -74,6 +74,8 @@ public class Device {
 
     public static int getBatteryPercentage(){ return  BatteryInfo.getBatteryPercentage(); }
 
+    public static int getSignaldBm(){ return SignalLevel.getSignaldBm(); }
+
     //public static int getAllData(){ }
 
 }

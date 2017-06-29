@@ -107,6 +107,7 @@ public class ServiceRegisterAux {
         service.addParameter("percentage", "float");
         service.addParameter("carrier", "string");
         service.addParameter("signal", "float");
+        service.addParameter("signaldbm", "float");
         service.addParameter("latitude", "float");
         service.addParameter("longitude", "float");
         service.addParameter("deviceId", "string");

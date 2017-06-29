@@ -19,6 +19,9 @@ import com.iot.unb.model.service.RaiseUIOT;
 import com.iot.unb.SmartMetering.GPSTracker;
 import com.iot.unb.model.service.SignalLevel;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
     private static Context context;
@@ -43,6 +46,25 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         new GPSTracker(SettingsActivity.this);
         new SignalLevel(SettingsActivity.this);
         new BatteryInfo(SettingsActivity.this);
+
+        Timer timer = new Timer();
+        TimerTask hourlyTask = new TimerTask() {
+            @Override
+            public void run() {
+                RaiseUIOT.collectDataForAllServices(new Raise.Listener<String>() {
+                    @Override
+                    public void onSucces(String response) {
+                        System.out.println("Data have all successfuly been collected!");
+                    }
+                }, new Raise.ErrorListener() {
+                    @Override
+                    public void onError(VolleyError error) {
+                        System.out.println("Error Collectiong Data!");
+                    }
+                });
+            }
+        };
+        timer.schedule (hourlyTask, 0l, 1000*60*60);
     }
 
     @Override
@@ -94,12 +116,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         RaiseUIOT.collectDataForAllServices(new Raise.Listener<String>() {
             @Override
             public void onSucces(String response) {
-                Toast.makeText(SettingsActivity.this, "Datas have all successfuly been collected!", Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingsActivity.this, "Data have all successfuly been collected!", Toast.LENGTH_LONG).show();
             }
         }, new Raise.ErrorListener() {
             @Override
             public void onError(VolleyError error) {
-                Toast.makeText(SettingsActivity.this, "Error Collectiong Datas!", Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingsActivity.this, "Error Collectiong Data!", Toast.LENGTH_LONG).show();
             }
         });
     }
