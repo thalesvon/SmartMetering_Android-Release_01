@@ -19,6 +19,8 @@ import com.iot.unb.model.domain.register.ServiceRegister;
 import com.iot.unb.model.domain.result.AutoRegisterResult;
 import com.iot.unb.model.domain.result.ServiceRegisterResult;
 
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -221,7 +223,7 @@ public class RaiseUIOT {
                             .setPrettyPrinting()
                             .create()
                             .toJson(jsonData);
-
+                    MainActivity.last_json =  json;
                     //Prints the json
                     Log.d("Smart Metering", json);
 

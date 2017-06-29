@@ -7,19 +7,33 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.ListView;
 
 
-public class MainActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     int  REQUEST_CODE_ASK_PERMISSIONS = 123;
     private static Context context;
+    private ListView listView;
+    private List<LastData> data_list;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    public static String last_json;
+    private SwipeListAdapter adapter;
 
     /**
      * Gets the <{@link MainActivity}/> context.
@@ -41,6 +55,26 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
         context = getBaseContext();
 
+        listView = (ListView) findViewById(R.id.listView);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        data_list = new ArrayList<>();
+        adapter = new SwipeListAdapter(this, data_list);
+
+
+        listView.setAdapter(adapter);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        /*swipeRefreshLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(true);
+
+                                    }
+                                }
+        );*/
+
+
+
     }
 
     @Override
@@ -60,5 +94,37 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getLastData();
+    }
+
+    public void getLastData(){
+        swipeRefreshLayout.setRefreshing(true);
+        String latitude;
+        String longitude;
+        try {
+            JSONObject dataObj =  new JSONObject(last_json);
+            System.out.println(dataObj);
+            JSONArray data = dataObj.getJSONArray("data");
+            JSONObject data_values = data.getJSONObject(0);
+            System.out.println(data_values);
+            JSONObject value = data_values.getJSONObject("data_values");
+            System.out.println(value);
+            latitude = value.getString("latitude");
+            longitude = value.getString("longitude");
+            System.out.println(latitude);
+            System.out.println(longitude);
+
+            LastData ld = new LastData(latitude,longitude);
+            data_list.add(0,ld);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        swipeRefreshLayout.setRefreshing(false);
+
     }
 }
