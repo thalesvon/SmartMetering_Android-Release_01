@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             System.out.println(timestamp);
             //System.out.println(longitude);
 
-            LastData ld = new LastData(timestamp);
+            LastData ld = new LastData(timestamp, latitude, longitude, state, percentage, carrier, signal ,signaldbm);
             data_list.add(0,ld);
 
         } catch (JSONException e) {

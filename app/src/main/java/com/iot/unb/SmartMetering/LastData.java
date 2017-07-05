@@ -16,8 +16,9 @@ public class LastData {
 
     public LastData() {
     }
+    
 
-    /*public LastData(String latitude, String longitude,String state,String percentage,String carrier,String signal,String signaldbm) {
+    public LastData(String timestamp, String latitude, String longitude, String state, String percentage, String carrier, String signal, String signaldbm) {
         this.longitude = latitude;
         this.latitude = longitude;
         this.state = state;
@@ -25,8 +26,8 @@ public class LastData {
         this.carrier = carrier;
         this.signal = signal;
         this.signaldbm = signaldbm;
-    }*/
-    public LastData(String timestamp) {
-        this.timestamp = timestamp;
     }
+    /*public LastData(String timestamp) {
+        this.timestamp = timestamp;
+    }*/
 }
