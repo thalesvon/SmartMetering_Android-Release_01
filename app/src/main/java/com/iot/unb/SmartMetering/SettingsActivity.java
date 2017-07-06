@@ -18,14 +18,15 @@ import com.iot.unb.model.service.Raise;
 import com.iot.unb.model.service.RaiseUIOT;
 import com.iot.unb.SmartMetering.GPSTracker;
 import com.iot.unb.model.service.SignalLevel;
+import com.iot.unb.model.service.UIOTCaller;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
+public  class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
     private static Context context;
-
+    UIOTCaller uiotCaller = new UIOTCaller();
     /**
      * Gets the <{@link MainActivity}/> context.
      * @return <{@link Context}/>.
@@ -47,24 +48,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         new SignalLevel(SettingsActivity.this);
         new BatteryInfo(SettingsActivity.this);
 
-        Timer timer = new Timer();
-        TimerTask hourlyTask = new TimerTask() {
-            @Override
-            public void run() {
-                RaiseUIOT.collectDataForAllServices(new Raise.Listener<String>() {
-                    @Override
-                    public void onSucces(String response) {
-                        System.out.println("Data have all successfuly been collected!");
-                    }
-                }, new Raise.ErrorListener() {
-                    @Override
-                    public void onError(VolleyError error) {
-                        System.out.println("Error Collectiong Data!");
-                    }
-                });
-            }
-        };
-        timer.schedule (hourlyTask, 0l, 1000*60*10);
     }
 
     @Override
@@ -78,9 +61,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void autoRegisterClick() {
-
-        final Raise.ErrorListener errorListener = new Raise.ErrorListener() {
+    public void autoRegisterClick() {
+        uiotCaller.passContext(SettingsActivity.this);
+        uiotCaller.autoRegister();
+        /*final Raise.ErrorListener errorListener = new Raise.ErrorListener() {
             @Override
             public void onError(VolleyError error) {
 
@@ -109,11 +93,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }, errorListener);
             }
-        }, errorListener);
+        }, errorListener);*/
     }
 
-    private void dataCollectionClick() {
-        RaiseUIOT.collectDataForAllServices(new Raise.Listener<String>() {
+    public void dataCollectionClick() {
+        uiotCaller.passContext(SettingsActivity.this);
+        uiotCaller.dataCollection();
+        /*RaiseUIOT.collectDataForAllServices(new Raise.Listener<String>() {
             @Override
             public void onSucces(String response) {
                 Toast.makeText(SettingsActivity.this, "Data have all successfuly been collected!", Toast.LENGTH_LONG).show();
@@ -123,6 +109,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             public void onError(VolleyError error) {
                 Toast.makeText(SettingsActivity.this, "Error Collectiong Data!", Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 }

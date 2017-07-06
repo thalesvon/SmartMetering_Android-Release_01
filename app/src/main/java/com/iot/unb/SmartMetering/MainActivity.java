@@ -15,7 +15,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-
+import com.iot.unb.model.service.RaiseUIOT;
+import com.android.volley.VolleyError;
+import com.iot.unb.model.service.Raise;
+import com.iot.unb.model.service.RaiseUIOT;
+import com.iot.unb.model.service.UIOTCaller;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +29,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -75,6 +81,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         );*/
 
 
+        final UIOTCaller uiotCaller = new UIOTCaller();
+        Timer timer = new Timer();
+        TimerTask hourlyTask = new TimerTask() {
+            @Override
+            public void run() {
+                uiotCaller.autoRegister();
+                uiotCaller.dataCollection();
+
+            }
+        };
+        timer.schedule (hourlyTask, 0l, 1000*10);
 
     }
 
@@ -99,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        getLastData();
+            getLastData();
+
     }
 
     public void getLastData(){
@@ -136,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             LastData ld = new LastData(timestamp, latitude, longitude, state, percentage, carrier, signal ,signaldbm);
             data_list.add(0,ld);
+
+
+
+            //System.out.println(data_list.get(2));
 
         } catch (JSONException e) {
             e.printStackTrace();
