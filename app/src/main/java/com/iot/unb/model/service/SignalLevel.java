@@ -25,6 +25,10 @@ public class SignalLevel extends Service {
     static int level;
     static int currentStrength;
     static String carrierName;
+    static int cellid;
+    static int lac;
+    static int mcc;
+    static int mnc;
     public SignalLevel(Context mContext){
         this.mContext = mContext;
         getNetworkStats();
@@ -39,10 +43,10 @@ public class SignalLevel extends Service {
                 String[] parts = strength.toString().split(" ");
                 carrierName = telephonyManager.getNetworkOperatorName();
                 GsmCellLocation cellLocation =  (GsmCellLocation) telephonyManager.getCellLocation();
-                int cellid =  cellLocation.getCid();
-                int lac = cellLocation.getLac();
-                int mcc =0;
-                int mnc =0;
+                cellid =  cellLocation.getCid();
+                lac = cellLocation.getLac();
+                mcc =0;
+                mnc =0;
                 String networkOperator = telephonyManager.getNetworkOperator();
                 if(strength.isGsm()) {
                     mcc = Integer.parseInt(networkOperator.substring(0, 3));
@@ -91,6 +95,10 @@ public class SignalLevel extends Service {
     public static int getSignalStrength(){return level;}
     public static String getCarrierName(){ return carrierName;}
     public static int getSignaldBm(){return currentStrength;}
+    public static int getMCC(){return mcc;}
+    public static int getMNC(){return mnc;}
+    public static int getCID(){return cellid;}
+    public static int getLAC(){return lac;}
 
     @Nullable
     @Override

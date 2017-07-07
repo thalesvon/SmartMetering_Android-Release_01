@@ -53,6 +53,7 @@ public class Device {
     }
 
     public static float getLatitude() {
+        System.out.println("OOOOOOOOOOOOO "+GPSTracker.getLatitude());
         return (float) GPSTracker.getLatitude();
     }
 

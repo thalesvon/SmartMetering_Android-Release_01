@@ -44,9 +44,9 @@ public  class SettingsActivity extends AppCompatActivity implements View.OnClick
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Settings");
         context = getBaseContext();
-        new GPSTracker(SettingsActivity.this);
-        new SignalLevel(SettingsActivity.this);
-        new BatteryInfo(SettingsActivity.this);
+        //new GPSTracker(SettingsActivity.this);
+        //new SignalLevel(SettingsActivity.this);
+        //new BatteryInfo(SettingsActivity.this);
 
     }
 

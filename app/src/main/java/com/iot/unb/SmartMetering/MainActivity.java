@@ -15,10 +15,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+
+import com.iot.unb.model.service.BatteryInfo;
 import com.iot.unb.model.service.RaiseUIOT;
 import com.android.volley.VolleyError;
 import com.iot.unb.model.service.Raise;
 import com.iot.unb.model.service.RaiseUIOT;
+import com.iot.unb.model.service.SignalLevel;
 import com.iot.unb.model.service.UIOTCaller;
 
 import org.json.JSONArray;
@@ -62,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         actionBar.setTitle("Smart Metering");
         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
         context = getBaseContext();
-
+        new com.iot.unb.SmartMetering.GPSTracker(MainActivity.this);
+        new SignalLevel(MainActivity.this);
+        new BatteryInfo(MainActivity.this);
         listView = (ListView) findViewById(R.id.listView);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         data_list = new ArrayList<>();

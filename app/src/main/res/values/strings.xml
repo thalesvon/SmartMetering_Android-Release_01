@@ -5,4 +5,11 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="measurements">Current Measurements</string>
     <string name="mobile_measurements">Mobile Measurement</string>
+    <string name="carrier_field">Carrier:</string>
+    <string name="signal_level_field">Signal(level):</string>
+    <string name="signal_dbm_field">Signal(dBm):</string>
+    <string name="latitude_field">Latitude:</string>
+    <string name="longitude_field">Longitude:</string>
+    <string name="battery_field">Baterry %:</string>
+    <string name="battery_state_field">State:</string>
 </resources>
