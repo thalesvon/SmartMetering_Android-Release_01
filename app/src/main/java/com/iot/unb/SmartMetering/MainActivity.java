@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private ListView listView;
     private List<LastData> data_list;
     private SwipeRefreshLayout swipeRefreshLayout;
-    public static String last_json;
+    public static List<String> last_json;
     private SwipeListAdapter adapter;
 
     /**
@@ -66,19 +66,21 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         listView = (ListView) findViewById(R.id.listView);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         data_list = new ArrayList<>();
+        last_json = new ArrayList<>();
         adapter = new SwipeListAdapter(this, data_list);
 
         listView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        /*swipeRefreshLayout.post(new Runnable() {
+        swipeRefreshLayout.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         swipeRefreshLayout.setRefreshing(true);
-
+                                        getLastData();
+                                        swipeRefreshLayout.setRefreshing(false);
                                     }
                                 }
-        );*/
+        );
 
 
         final UIOTCaller uiotCaller = new UIOTCaller();
@@ -88,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void run() {
                 uiotCaller.autoRegister();
                 uiotCaller.dataCollection();
-
             }
         };
         timer.schedule (hourlyTask, 0l, 1000*10);
@@ -108,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             case R.id.action_settings :
                 Intent intent = new Intent(getContext(), SettingsActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_state:
+                Intent intent1 = new Intent(getContext(), StateActivity.class);
+                startActivity(intent1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -132,38 +137,43 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         String timestamp;
 
         try {
-            JSONObject dataObj =  new JSONObject(last_json);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            timestamp = "Data collected on: " + sdf.format(Integer.valueOf(dataObj.getString("client_time"))*1000L);
-            System.out.println(dataObj);
-            JSONArray data = dataObj.getJSONArray("data");
-            JSONObject data_values = data.getJSONObject(0);
-            System.out.println(data_values);
-            JSONObject value = data_values.getJSONObject("data_values");
-            System.out.println(value);
-            latitude ="Latitude: " + value.getString("latitude");
-            longitude ="Longitude: " + value.getString("longitude");
-            state = "State: " + value.getString("state");
-            percentage ="Percentage: " + value.getString("percentage");
-            carrier = "Carrier: " + value.getString("carrier");
-            signal = "Signal: " + value.getString("signal");
-            signaldbm = "Signal(dBm): " + value.getString("signaldbm");
+                for(int i = 0;i<last_json.size();i++) {
 
-            System.out.println(timestamp);
-            //System.out.println(longitude);
-
-            LastData ld = new LastData(timestamp, latitude, longitude, state, percentage, carrier, signal ,signaldbm);
-            data_list.add(0,ld);
+                    JSONObject dataObj = new JSONObject(last_json.get(i));
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    timestamp = "Data collected on: " + sdf.format(Integer.valueOf(dataObj.getString("client_time")) * 1000L);
+                    System.out.println("ESSE AQUUUIIIIIII "+dataObj.getString("client_time"));
+                    JSONArray data = dataObj.getJSONArray("data");
+                    JSONObject data_values = data.getJSONObject(0);
+                    System.out.println(data_values);
+                    JSONObject value = data_values.getJSONObject("data_values");
+                    System.out.println(value);
+                    latitude = "Latitude: " + value.getString("latitude");
+                    longitude = "Longitude: " + value.getString("longitude");
+                    state = "State: " + value.getString("state");
+                    percentage = "Percentage: " + value.getString("percentage");
+                    carrier = "Carrier: " ;//+ value.getString("carrier");
+                    signal = "Signal: " + value.getString("signal");
+                    signaldbm = "Signal(dBm): " + value.getString("signaldbm");
 
 
+                    //System.out.println(""+timestamp);
+                    //System.out.println(longitude);
 
-            //System.out.println(data_list.get(2));
+                    LastData ld = new LastData(timestamp, latitude, longitude, state, percentage, carrier, signal, signaldbm);
+                    data_list.add(0, ld);
+
+
+                }
+
+                    //System.out.println(data_list.get(2));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
+        last_json.clear();
 
     }
 }

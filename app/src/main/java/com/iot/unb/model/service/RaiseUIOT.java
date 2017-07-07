@@ -223,7 +223,7 @@ public class RaiseUIOT {
                             .setPrettyPrinting()
                             .create()
                             .toJson(jsonData);
-                    MainActivity.last_json =  json;
+                    MainActivity.last_json.add(json);
                     //Prints the json
                     Log.d("Smart Metering", json);
 
