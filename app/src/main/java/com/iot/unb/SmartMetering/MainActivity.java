@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 uiotCaller.dataCollection();
             }
         };
-        timer.schedule (hourlyTask, 0l, 1000*10);
+        timer.schedule (hourlyTask, 0l, 1000*60*20);
 
     }
 

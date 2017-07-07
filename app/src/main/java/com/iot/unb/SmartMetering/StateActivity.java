@@ -17,6 +17,11 @@ public class StateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_state);
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         TextView carrierView = (TextView) findViewById(R.id.carrier);
         TextView latView = (TextView) findViewById(R.id.latitude);
         TextView longView = (TextView) findViewById(R.id.longitude);
@@ -43,12 +48,5 @@ public class StateActivity extends AppCompatActivity {
         dbmView.setText(String.valueOf(signal_dbm));
         batView.setText(String.valueOf(baterry_percentage));
         stateView.setText(state);
-
-    }
-
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-        this.finish();
     }
 }
